@@ -1,0 +1,122 @@
+/*
+*
+* Мои стили для сайта
+*
+*/
+
+/* Настройки для header и body сайта */
+body{
+  background: #F5F5FB;
+}
+#head{
+  background: white;
+  padding-bottom: 10px;
+}
+/**************************************************/
+/* Sidebar */
+.sidenav {
+  height: 100%; /* 100% Full-height */
+  width: 0; /* 0 ширина - изменить это с помощью JavaScript */
+  position: fixed; /* Оставайтесь на месте */
+  z-index: 1; /* Оставайтесь сверху */
+  top: 0; /* Оставайтесь наверху */
+  left: 0;
+  background-color: #F5F5FB; /* Фон*/
+  overflow-x: hidden; /* Отключить горизонтальную прокрутку */
+  padding-top: 60px; /* Поместите контент в 60px сверху */
+  transition: 0.5s; /* 0.5 второй эффект перехода слайда в боковой навигации */
+}
+/* Ссылки меню навигации */
+.sidenav a,p {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 16px;
+  color: #060316;
+  display: block;
+  transition: 0.3s;
+}
+.sidenav a:hover {
+  color: #b3b3b3;
+}
+/* Положение и стиль кнопки закрытия (верхний правый угол) */
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  font-size: 25px;
+  margin-left: 50px;
+}
+/* Иконки в sidebar */
+i.bi-table {
+  vertical-align: 2px;
+}
+i.bi-search {
+ vertical-align: 2px;
+}
+i.bi-building {
+ vertical-align: 2px;
+}
+i.bi-briefcase {
+ vertical-align: 1px;
+}
+i.bi-info-square {
+ font-size: 17px;
+}
+/**************************************************/
+/* Кнопка Excel */
+.Excel:hover{
+    background: white; /* Цвет фона под ссылкой */
+    color: #6C757D;
+}
+/**************************************************/
+/* Настройки для контента страницы */
+#main{
+  transition: margin-left .5s;
+  padding-top: 20px;
+  font-size: 15px;
+}
+/**************************************************/
+/*Фильтры*/
+thead input {
+        width: 100%;
+}
+.dataTables_filter{
+  margin-bottom: 20px;
+}
+.dt-buttons{
+  float: left;
+}
+.dt-buttons:hover{
+  transform: scale(1.2);
+}
+.clearCon {
+  display: flex;
+  flex: auto;
+}
+.clearInput{
+  margin-right: 5px;
+}
+a.clearIcon{
+  text-decoration: none;
+}
+.bi.bi-x-square{
+  font-size:17px;
+  vertical-align: 6px;
+  color: #060316;
+}
+#Filter0{
+  width: 50px;
+}
+#Filter1{
+  width: 120px;
+}
+#Filter2{
+  width: 130px;
+}
+#Filter5{
+  width: 120px;
+}
+#Filter6{
+  width: 100px;
+}
+/**************************************************/
