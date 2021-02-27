@@ -94,7 +94,7 @@ $(document).ready(function(){
 
 var table = $('#example').DataTable({
             "serverSide":true,
-            "searching": true,
+            "searching": false,
             "processing": true,
             "lengthChange":false,
             "orderCellsTop": true,
@@ -126,31 +126,9 @@ var table = $('#example').DataTable({
                 table.buttons().container()
                   .appendTo( $('.dataTables_filter', table.table().container() ) );
               }
-            /* "buttons": [ {
-              text:      '<i class="bi bi-file-earmark-spreadsheet"></i>',
-              className: 'btn btn-outline-secondary Excel btn-sm',
-              extend: 'excelHtml5',
-              exportOptions: {columns: [0,1,2,3,4,5]}, 
-            } ], */
-
           });
 
-          $('#Filter0').on('input keyup', function(e) {
-              table.draw();
-            });
-          $('#Filter1').on('input keyup', function(e) {
-              table.draw();
-            });  
-          $('#Filter2').on('input keyup', function(e) {
-              table.draw();
-            });  
-          $('#Filter3').on('input keyup', function(e) {
-              table.draw();
-            });
-          $('#Filter4').on('input keyup', function(e) {
-              table.draw();
-            });
-          $('#Filter5').on('input keyup', function(e) {
+          $('.clearInput').on('input keyup', function(e) {
               table.draw();
             });
 

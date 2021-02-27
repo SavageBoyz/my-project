@@ -74,7 +74,7 @@ class M_inspectors extends Model
    /*****************************/
 
    /*Вывод таблицы*/
-  public function get_datatables($idF, $sbe_nameF, $au_nameF, $date_frF, $date_toF, $durationF)
+  public function get_datatables($idF, $sbe_nameF, $au_nameF, $date_frF, $date_toF, $durationF,$order_value,$length,$start)
   {
     /***ALL_FILTERS***/
 
@@ -125,38 +125,37 @@ class M_inspectors extends Model
       $condition_durationF = "AND Duration = '$durationF'";
     }
     /*****/ 
+
     /****************/  
 
-    /*Search*/
-    if($_POST['search']['value']){
-      $search = $_POST['search']['value'];
-      $condition_search = "Id_ins LIKE '%$search%' OR TitleS LIKE '%$search%' OR TitleA LIKE '%$search%' OR DateFr LIKE '%$search%'
-      OR DateTo LIKE '%$search%' OR Duration LIKE '%$search%' $condition_idF $condition_sbe_nameF $condition_au_nameF $condition_date_frF $condition_date_toF $condition_durationF";
-    }else{
+    /* Получение запроса для поиска */
       $condition_search = "Id_ins != '' $condition_idF $condition_sbe_nameF $condition_au_nameF $condition_date_frF $condition_date_toF $condition_durationF";
-    }
-    /********/
+    /********************************/  
     /*Order*/
-    if($_POST['order']){
-      $result_order = $this->column_order[$_POST['order']['0']['column']];
-      $result_dir = $_POST['order']['0']['dir'];
+    if($order_value){
+      $result_order = $this->column_order[$order_value['0']['column']];
+      $result_dir = $order_value['0']['dir'];
     }else if($this->order){
       $order = $this->order;
       $result_order = key($order);
       $result_dir = $order[key($order)];
     }
     /*******/
-    if($_POST['length']!=-1);
+
+    /*Input table*/
+    if($length!=-1);
       $builder = $this->db->table('inspectors')
       ->join('sbe','sbe.Id_sbe = inspectors.SbeId')
       ->join('authority','authority.Id_au = inspectors.AuthorityId');
       $query = $builder->select("*")
                        ->where($condition_search)
                        ->orderBy($result_order,$result_dir)
-                       ->limit($_POST['length'],$_POST['start'])
+                       ->limit($length,$start)
                        ->get();
       return $query->getResult();
+    /************/
   }
+
   /*Все записи*/
   public function Count_all()
   {
@@ -165,67 +164,64 @@ class M_inspectors extends Model
     $query = $db->query($sQuery)->getRow();
     return $query;
   }
-
+  /***********/
   public function Count_filter($idF, $sbe_nameF, $au_nameF, $date_frF, $date_toF, $durationF)
   {
-    /***ALL_FILTERS***/
+      /***ALL_FILTERS***/
 
-    /*Фильтр по ID*/
-    if(empty($idF)){
-      $condition_idF = "";
+      /*Фильтр по ID*/
+      if(empty($idF)){
+        $condition_idF = "";
+      }else{
+        $condition_idF = "AND Id_ins = '$idF'";
+      }
+    /*****/
+
+    /*Фильтр по названию СМП*/
+    if(empty($sbe_nameF)){
+      $condition_sbe_nameF = "";
     }else{
-      $condition_idF = "AND Id_ins = '$idF'";
+      $condition_sbe_nameF = "AND TitleS LIKE '%$sbe_nameF%'";
     }
-  /*****/
+    /*****/
 
-  /*Фильтр по названию СМП*/
-  if(empty($sbe_nameF)){
-    $condition_sbe_nameF = "";
-  }else{
-    $condition_sbe_nameF = "AND TitleS LIKE '%$sbe_nameF%'";
-  }
-  /*****/
-
-  /*Фильтр по названию контр. органа*/
-  if(empty($au_nameF)){
-    $condition_au_nameF = "";
-  }else{
-    $condition_au_nameF = "AND TitleA LIKE '%$au_nameF%'";
-  }
-  /*****/   
-
-  /*Фильтр по дате от*/
-  if(empty($date_frF)){
-    $condition_date_frF = "";
-  }else{
-    $condition_date_frF = "AND DateFr = '$date_frF'";
-  }
-  /*****/   
-
-  /*Фильтр по дате до*/
-  if(empty($date_toF)){
-    $condition_date_toF = "";
-  }else{
-    $condition_date_toF = "AND DateTo = '$date_toF'";
-  }
-  /*****/ 
-
-  /*Фильтр по длительности*/
-  if(empty($durationF)){
-    $condition_durationF = "";
-  }else{
-    $condition_durationF = "AND DateTo = '$durationF'";
-  }
-  /*****/ 
-  /****************/  
-    
-    if($_POST['search']['value']){
-      $search = $_POST['search']['value'];
-      $condition_search = "AND (Id_ins LIKE '%$search%' OR TitleS LIKE '%$search%' OR TitleA LIKE '%$search%' OR DateFr LIKE '%$search%'
-      OR DateTo LIKE '%$search%' OR Duration LIKE '%$search%') $condition_idF $condition_sbe_nameF $condition_au_nameF $condition_date_frF $condition_date_toF $condition_durationF";
+    /*Фильтр по названию контр. органа*/
+    if(empty($au_nameF)){
+      $condition_au_nameF = "";
     }else{
-      $condition_search = "$condition_idF $condition_sbe_nameF $condition_au_nameF $condition_date_frF $condition_date_toF $condition_durationF";
+      $condition_au_nameF = "AND TitleA LIKE '%$au_nameF%'";
     }
+    /*****/   
+
+    /*Фильтр по дате от*/
+    if(empty($date_frF)){
+      $condition_date_frF = "";
+    }else{
+      $condition_date_frF = "AND DateFr = '$date_frF'";
+    }
+    /*****/   
+
+    /*Фильтр по дате до*/
+    if(empty($date_toF)){
+      $condition_date_toF = "";
+    }else{
+      $condition_date_toF = "AND DateTo = '$date_toF'";
+    }
+    /*****/ 
+
+    /*Фильтр по длительности*/
+    if(empty($durationF)){
+      $condition_durationF = "";
+    }else{
+      $condition_durationF = "AND DateTo = '$durationF'";
+    }
+    /*****/ 
+
+    /****************/  
+
+    /* Получение запроса для поиска */  
+    $condition_search = "$condition_idF $condition_sbe_nameF $condition_au_nameF $condition_date_frF $condition_date_toF $condition_durationF";
+    /********************************/ 
 
     $sQuery = "SELECT COUNT(Id_ins) as countData FROM inspectors WHERE Id_ins != '' $condition_search";
     $db = db_connect();

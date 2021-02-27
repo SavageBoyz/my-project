@@ -311,9 +311,12 @@ class Inspectors extends BaseController
     $date_frF = $this->request->getPost('date_frF');
     $date_toF = $this->request->getPost('date_toF');
     $durationF = $this->request->getPost('durationF');
+    $order_value = $this->request->getPost('order');
+    $length = $this->request->getPost('length');
+    $start = $this->request->getPost('start');
     /*********/
 
-    $listing = $modelInspector->get_datatables($idF,$sbe_nameF,$au_nameF,$date_frF,$date_toF,$durationF);
+    $listing = $modelInspector->get_datatables($idF,$sbe_nameF,$au_nameF,$date_frF,$date_toF,$durationF,$order_value,$length,$start);
     $count_all = $modelInspector->Count_all();
     $count_filter = $modelInspector->Count_filter($idF,$sbe_nameF,$au_nameF,$date_frF,$date_toF,$durationF);
 
